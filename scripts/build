@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# scripts/build: Build the application.s
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+[ -z "$DEBUG" ] || set -x
+
+echo "==> Building…"
+
+MACOSX_DEPLOYMENT_TARGET=${1-'x86_64-apple-macosx10.12'}
+BUILD_TYPE=${2-release}
+swift build -c ${BUILD_TYPE} -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "${MACOSX_DEPLOYMENT_TARGET}"

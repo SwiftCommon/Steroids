@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# scripts/cibuild: Setup environment for CI to run tests. This is primarily
+#                 designed to run on the continuous integration server.
+
+MACOSX_DEPLOYMENT_TARGET=${1-'x86_64-apple-macosx10.12'}
+BUILD_TYPE=${2-Release}
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+echo "CI started at…"
+date "+%H:%M:%S"
+
+# Lint
+echo "Linting"
+date "+%H:%M:%S"
+scripts/lint
+
+# run tests
+echo "Running tests…"
+date "+%H:%M:%S"
+scripts/test
+
+# run cibuild.
+echo "Create build"
+date "+%H:%M:%S"
+scripts/build ${MACOSX_DEPLOYMENT_TARGET} ${BUILD_TYPE}
+
+echo "Done"
+date "+%H:%M:%S"
