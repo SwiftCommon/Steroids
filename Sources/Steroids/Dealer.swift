@@ -15,4 +15,16 @@ public final class Dealer {
             return container
         }
     }
+
+    public func push<Service>(
+        _ serviceType: Service.Type,
+        name: String? = nil,
+        factory: @escaping (Resolver) -> Service
+    ) -> ServiceEntry<Service> {
+        return container.register(serviceType, name: name, factory: factory)
+    }
+
+    public func reset() {
+        container.removeAll()
+    }
 }
