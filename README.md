@@ -30,7 +30,7 @@ class VeryClass {
 // Register a Service
 Dealer.push(name: "crystal") { MagicBlues() as SomeAwesomeService }
 
-// to drop all registrations
+// Remove all registrations
 Dealer.reset()
 ```
 
