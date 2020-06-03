@@ -10,7 +10,9 @@ public final class Dealer {
     }
 
     /// Shared dealer instance for all your needs
-    public static var shared = Dealer(container: Container())
+    public static let shared: Dealer = {
+        Dealer(container: Container())
+    }()
 
     /// The actual resolver hidden by this Dealer
     public var resolver: Resolver {
