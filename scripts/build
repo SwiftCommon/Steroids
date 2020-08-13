@@ -12,4 +12,4 @@ echo "==> Building…"
 
 MACOSX_DEPLOYMENT_TARGET=${1-'x86_64-apple-macosx10.12'}
 BUILD_TYPE=${2-release}
-swift build -c ${BUILD_TYPE} -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "${MACOSX_DEPLOYMENT_TARGET}"
+swift build -c ${BUILD_TYPE} -Xswiftc "-target" -Xswiftc "${MACOSX_DEPLOYMENT_TARGET}"

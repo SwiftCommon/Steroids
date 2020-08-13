@@ -6,4 +6,5 @@ set -ev
 
 cd "$(dirname "$0")/.."
 
+swift package update
 scripts/setup
