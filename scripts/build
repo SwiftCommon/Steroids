@@ -6,10 +6,12 @@ set -ev
 
 cd "$(dirname "$0")/.."
 
+BASH_PROFILE='.bash_profile'
+[ -f "${BASH_PROFILE}" ] && source ${BASH_PROFILE}
+
 [ -z "$DEBUG" ] || set -x
 
 echo "==> Building…"
 
-MACOSX_DEPLOYMENT_TARGET=${1-'x86_64-apple-macosx10.12'}
-BUILD_TYPE=${2-release}
-swift build -c ${BUILD_TYPE} -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "${MACOSX_DEPLOYMENT_TARGET}"
+BUILD_TYPE=$(echo ${1-release} | tr '[:upper:]' '[:lower:]')
+swift build -c ${BUILD_TYPE}

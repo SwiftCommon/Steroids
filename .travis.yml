@@ -9,13 +9,13 @@ env:
 branches:
   only:
     - master
-install:
+before_script:
   - make setup
 script:
-  - make cibuild BUILD_TYPE=release
+  - make cibuild
 after_success:
   # Run codecov
-  - bash <(curl -s https://codecov.io/bash) -J 'Steriods';
+  - bash <(curl -s https://codecov.io/bash) -J 'Steroids';
 after_failure:
  - cat -n ~/Library/Logs/scan/*
  - cat -n $TMPDIR/com.apple.dt.XCTest-status/Session*.log

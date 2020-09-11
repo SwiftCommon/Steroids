@@ -7,6 +7,13 @@ build/
 DerivedData/
 *.xcodeproj/
 
+# Mason
+.bash_profile
+.mason/
+
+# Codecov.io
+coverage.txt
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
