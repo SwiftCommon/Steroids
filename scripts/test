@@ -3,13 +3,23 @@
 # scripts/test: Run test suite for application. Optionally pass in a path to an
 #              individual test file to run a single test.
 
+MASON_LLVM_RELEASE=${1-'9.0.0'}
+
 set -ev
 
 cd "$(dirname "$0")/.."
 
+BASH_PROFILE='.bash_profile'
+[ -f "${BASH_PROFILE}" ] && source ${BASH_PROFILE}
+
 [ -z "$DEBUG" ] || set -x
+
+mason link llvm-cov ${MASON_LLVM_RELEASE}
 
 echo "==> Running tests…"
 
-MACOSX_DEPLOYMENT_TARGET=${1-'x86_64-apple-macosx10.12'}
-swift test -Xswiftc "-target" -Xswiftc "${MACOSX_DEPLOYMENT_TARGET}"
+swift test --enable-code-coverage
+
+# Export coverage report for codecov.io
+llvm-cov show .build/x86_64-apple-macosx/debug/SteroidsPackageTests.xctest/Contents/MacOS/SteroidsPackageTests \
+  -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata  > coverage.txt

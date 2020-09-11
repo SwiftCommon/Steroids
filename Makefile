@@ -3,7 +3,6 @@
 #
 
 TRAVIS 			?= false
-MACOSX_DEPLOYMENT_TARGET ?= 'x86_64-apple-macosx10.12'
 BUILD_TYPE	?= 'debug'
 PROJECT_DIR	:= $(PWD)
 
@@ -20,15 +19,15 @@ update:
 	$(PROJECT_DIR)/scripts/update
 
 test:
-	$(PROJECT_DIR)/scripts/test ${MACOSX_DEPLOYMENT_TARGET}
+	$(PROJECT_DIR)/scripts/test
 
 build:
-	$(PROJECT_DIR)/scripts/build ${MACOSX_DEPLOYMENT_TARGET} ${BUILD_TYPE}
+	$(PROJECT_DIR)/scripts/build ${BUILD_TYPE}
 
 lint:
 	$(PROJECT_DIR)/scripts/lint
 
 cibuild:
-	$(PROJECT_DIR)/scripts/cibuild ${MACOSX_DEPLOYMENT_TARGET} ${BUILD_TYPE}
+	$(PROJECT_DIR)/scripts/cibuild ${BUILD_TYPE}
 
 all: setup lint test build cibuild

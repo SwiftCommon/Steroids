@@ -21,6 +21,7 @@ Features
 ```swift
 class VeryClass {
     @Injected var someService: SomeAwesomeService
+    @Injected(name: "crystal") var namedService: SomeAwesomeService
 }
 ```
 
@@ -28,10 +29,10 @@ class VeryClass {
 
 ```swift
 // Register a Service
-Dealer.push(name: "crystal") { MagicBlues() as SomeAwesomeService }
+Dealer.shared.push(name: "crystal") { _ in MagicBlues() as SomeAwesomeService }
 
 // Remove all registrations
-Dealer.reset()
+Dealer.shared.reset()
 ```
 
 Installation

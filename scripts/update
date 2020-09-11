@@ -6,5 +6,8 @@ set -ev
 
 cd "$(dirname "$0")/.."
 
+BASH_PROFILE='.bash_profile'
+[ -f "${BASH_PROFILE}" ] && source ${BASH_PROFILE}
+
 swift package update
 scripts/setup

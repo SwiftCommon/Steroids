@@ -3,10 +3,17 @@
 # scripts/bootstrap: Resolve all dependencies that the application requires to
 #                   run.
 
+MASON_RELEASE=${1-'v0.21.0'}
+MASON_LLVM_RELEASE=${2-'9.0.0'}
+BASH_PROFILE='.bash_profile'
+
 set -ev
 
 cd "$(dirname "$0")/.."
 
+#
+# Homebrew
+#
 if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ]; then
   brew bundle check >/dev/null 2>&1  || {
     echo "==> Installing Homebrew dependencies…"
@@ -18,3 +25,30 @@ else
     brew install swiftlint
   }
 fi
+
+
+#
+# MASON
+#
+function setup_mason() {
+  local install_dir=${1}
+  local mason_dir="${install_dir}/.mason"
+  local mason_release=${2}
+  mkdir -p ${mason_dir}
+  curl -sSfL https://github.com/mapbox/mason/archive/${mason_release}.tar.gz | tar --gunzip --extract --strip-components=1 --directory=${mason_dir}
+  echo "export PATH=${mason_dir}:${install_dir}/mason_packages/.link/bin:"'${PATH}' > ${BASH_PROFILE}
+}
+hash mason 2>/dev/null  || {
+  echo "==> Installing MASON…"
+  setup_mason "$(pwd)" ${MASON_RELEASE}
+  source ${BASH_PROFILE}
+}
+
+#
+# llvm-cov for codecov.io
+#
+hash llvm-cov 2>/dev/null  || {
+  echo "==> Installing LLVM-COV…"
+  mason install llvm-cov ${MASON_LLVM_RELEASE}
+  mason link llvm-cov ${MASON_LLVM_RELEASE}
+}
